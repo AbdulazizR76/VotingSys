@@ -1,0 +1,65 @@
+﻿@model VotingSys.ViewModels.VoteVM
+
+@{
+    ViewBag.Title = "ShowOptions";
+}
+
+<h2>ShowOptions</h2>
+
+    <div>
+        <h4>VoteVM</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.QuestionText)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.QuestionText)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.IsCurrent)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.IsCurrent)
+            </dd>
+        </dl>
+
+
+
+
+        <table class="table">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Id) </th>
+                <th>@Html.DisplayNameFor(model => model.Options)</th>
+
+            </tr>
+
+            
+                @foreach (var o in Model.Options)
+                {
+                <tr>
+                    <td>@o.Id</td>
+                    <td>@o.OptionText</td>
+
+                    <td>
+                        @Html.ActionLink("Edit Option", "EditOptions", new { id = Model.Id }) |
+                        @*@Html.ActionLink("Delete", "Details", new { id = Model.Id }) |*@
+         
+
+                    </td>
+                </tr>
+
+            }
+                
+
+
+
+            </table>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>

@@ -201,6 +201,8 @@
     <Content Include="Views\Vote\Create.cshtml" />
     <Content Include="Views\Vote\Edit.cshtml" />
     <Content Include="Views\Vote\AddOption.cshtml" />
+    <Content Include="Views\Vote\ShowOptions.cshtml" />
+    <Content Include="Views\Vote\EditOptions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

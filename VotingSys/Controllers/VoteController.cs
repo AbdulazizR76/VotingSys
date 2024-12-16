@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using VotingSys.Models;
@@ -143,15 +144,67 @@ namespace VotingSys.Controllers
 
         public ActionResult ShowOptions(int voteId)
         {
-            var vote = context.Votes.SingleOrDefault(v => v.Id == voteId);
-            if (vote == null)
-            {
-                return HttpNotFound();
-            }
-            var model = new VoteOptionVM { VoteId = voteId };
+            var result = context.Votes
+                .Where(x => x.Id == voteId).Include(x => x.VoteOptions).Select(x => new
+                {
+                    Id = x.Id,
+                    IsCurrent = x.IsCurrent,
+                    QuestionText = x.QuestionText,
+                    Options = x.VoteOptions
 
-            return View(model);
+                }).FirstOrDefault();
+
+            if (result != null)
+            {
+                var model = new VoteVM();
+
+                model.QuestionText = result.QuestionText;
+                model.IsCurrent = result.IsCurrent;
+                model.Id = result.Id;
+
+
+                foreach (var option in result.Options)
+                {
+                    model.Options.Add(new VoteOptionVM
+                    {
+                        OptionText = option.OptionText,
+                        VoteId = option.VoteId,
+                        Id = option.Id
+                    });
+                }
+
+
+                return View(model);
+            }
+
+
+            return RedirectToAction("Index");
         }
+        [HttpGet]
+        public ActionResult EditOptions(int Id)
+        {
+
+            var option = context.Votes.Select(x => x.Id == Id);
+            if (option != null)
+            {
+                return View(option);
+            }
+            return HttpNotFound();
+
+        }
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult EditOptions(VoteOptionVM option)
+        //{
+        //    var model = context.VotesOption.SingleOrDefault(v => v.Id == option.Id);
+        //    if (ModelState.IsValid)
+        //    {
+        //        model.OptionText = option.OptionText;
+        //        return View(model);
+        //    }
+        //    return HttpNotFound();
+        //}
 
 
     }
