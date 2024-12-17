@@ -142,6 +142,9 @@ namespace VotingSys.Controllers
             return View(option);
         }
 
+
+
+        [HttpGet]
         public ActionResult ShowOptions(int voteId)
         {
             var result = context.Votes
@@ -181,30 +184,64 @@ namespace VotingSys.Controllers
             return RedirectToAction("Index");
         }
         [HttpGet]
-        public ActionResult EditOptions(int Id)
+        public ActionResult EditOptions(int optionId)
         {
 
-            var option = context.Votes.Select(x => x.Id == Id);
+            var option = context.VotesOption.FirstOrDefault(x => x.Id == optionId);
             if (option != null)
             {
-                return View(option);
+                var model = new VoteOptionVM
+                {
+                    OptionText = option.OptionText,
+                    VoteId = option.VoteId,
+                    Id = option.Id
+                };
+                return View(model);
             }
             return HttpNotFound();
 
         }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult EditOptions(VoteOptionVM option)
-        //{
-        //    var model = context.VotesOption.SingleOrDefault(v => v.Id == option.Id);
-        //    if (ModelState.IsValid)
-        //    {
-        //        model.OptionText = option.OptionText;
-        //        return View(model);
-        //    }
-        //    return HttpNotFound();
-        //}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditOptions(VoteOptionVM model)
+        {
+
+            if (ModelState.IsValid)
+            {
+                var option = context.VotesOption.FirstOrDefault(v => v.Id == model.Id);
+                if (option == null) return HttpNotFound();
+
+                option.OptionText = model.OptionText;
+                context.SaveChanges();
+                return RedirectToAction("index");
+
+
+            }
+            return HttpNotFound();
+        }
+
+        [HttpPost]
+        public ActionResult DeleteOption(int optionId)
+        {
+            if (ModelState.IsValid)
+            {
+                var option = context.VotesOption.FirstOrDefault(v => v.Id == optionId);
+                if (option == null) return HttpNotFound();
+
+                context.VotesOption.Remove(option);
+                context.SaveChanges();
+                return RedirectToAction("ShowOptions");
+            }
+            return HttpNotFound();
+
+        }
+
+
+
+
+
+
 
 
     }
