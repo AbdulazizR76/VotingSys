@@ -6,66 +6,57 @@
 
 <h2>ShowOptions</h2>
 
-<div>
-    <h4>VoteVM</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.QuestionText)
-        </dt>
-
-        <dd>
-            <h2>@Html.DisplayFor(model => model.QuestionText) ?</h2>  
-        </dd>
 
 
-    </dl>
-    <p>
-        @Html.ActionLink("Create New", "AddOption", new { voteId = Model.Id})
-    </p>
+<hr />
+<dl>
+    <dt>
+        @Html.DisplayNameFor(model => model.QuestionText)
+    </dt>
+
+    <dd>
+        <h2>@Html.DisplayFor(model => model.QuestionText) ?</h2>
+    </dd>
+</dl>
+<p>
+    @Html.ActionLink("Create New", "AddOption", new { voteId = Model.Id })
+</p>
 
 
 
 
-    <table class="table">
+<table>
+    <thead>
         <tr>
-            <th>@Html.DisplayNameFor(model => model.Id) </th>
-            <th>@Html.DisplayNameFor(model => model.Options)</th>
-
+            <th>Id</th>
+            <th>Options</th>
+            <th>Actions</th>
         </tr>
-
-
+    </thead>
+    <tbody>
         @foreach (var o in Model.Options)
         {
             <tr>
                 <td>@o.Id</td>
                 <td>@o.OptionText</td>
-
                 <td>
-                    @Html.ActionLink("Edit Option", "EditOptions", new { optionId = o.Id }) |
+                    @Html.ActionLink("Edit", "EditOptions", new { optionId = o.Id }, new { @class = "btn btn-sm btn-info" })
                     @using (Html.BeginForm("DeleteOption", "Vote", FormMethod.Post, new { @style = "display:inline;" }))
                     {
                         @Html.Hidden("optionId", o.Id)
-                        @*<button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this record?');">Delete</button>*@
-                        @*@Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
-                        <input type="submit" value="Delete" class="btn btn-danger"
+                        <input type="submit" value="Delete" class="btn btn-sm btn-danger"
                                onclick="return confirm('Are you sure you want to delete this record?');" />
-
                     }
-
 
                 </td>
             </tr>
-
         }
+    </tbody>
+</table>
 
 
-
-
-    </table>
-</div>
 <p>
 
     @Html.ActionLink("Back to List", "Index")
-    
+
 </p>

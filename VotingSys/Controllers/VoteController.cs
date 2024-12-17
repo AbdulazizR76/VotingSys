@@ -17,6 +17,9 @@ namespace VotingSys.Controllers
         public ActionResult Index()
         {
             List<Vote> votes = context.Votes.ToList();
+
+
+
             return View(votes);
         }
 
@@ -136,7 +139,7 @@ namespace VotingSys.Controllers
 
                 context.VotesOption.Add(model);
                 context.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("ShowOptions", new { voteId = model.VoteId});
 
             }
             return View(option);
@@ -226,12 +229,20 @@ namespace VotingSys.Controllers
         {
             if (ModelState.IsValid)
             {
-                var option = context.VotesOption.FirstOrDefault(v => v.Id == optionId);
-                if (option == null) return HttpNotFound();
+                var result = context.VotesOption.FirstOrDefault(v => v.Id == optionId);
+                if (result == null) return HttpNotFound();
+                var model = new VoteOptionVM
+                {
+                      OptionText = result.OptionText,
+                      VoteId = result.VoteId,
+                      Id = result.Id
+                };
+                
 
-                context.VotesOption.Remove(option);
+                context.VotesOption.Remove(result);
                 context.SaveChanges();
-                return RedirectToAction("ShowOptions");
+                return RedirectToAction("ShowOptions", new { voteId = model.VoteId });
+                //return RedirectToAction("Index");
             }
             return HttpNotFound();
 

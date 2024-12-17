@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<VotingSys.Models.Vote>
 
+
 @{
     ViewBag.Title = "Index";
 }
@@ -9,47 +10,51 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.QuestionText)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreationDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsCurrent)
-        </th>
-        <th></th>
-    </tr>
+<table>
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.QuestionText)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreationDate)
+            </th>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.QuestionText)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreationDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsCurrent)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-            @Html.ActionLink("AddOption", "AddOption", new { voteId = item.Id }) |
-            @Html.ActionLink("ShowOptions", "ShowOptions", new { voteId = item.Id }) |
-            @using (Html.BeginForm("Delete", "Vote", FormMethod.Post, new { @style = "display:inline;" }))
-            {
-                @Html.Hidden("id", item.Id)
-                @*<button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this record?');">Delete</button>*@
-                @*@Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
-                <input type="submit" value="Delete" class="btn btn-danger"
-                       onclick="return confirm('Are you sure you want to delete this record?');" />
-            }
+            <th>Actions</th>
 
-        </td>
-    </tr>
-}
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QuestionText)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreationDate)
+                </td>
+
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-sm btn-info" })
+                    @Html.ActionLink("ShowOptions", "ShowOptions", new { voteId = item.Id }, new { @class = "btn btn-sm btn-info" })
+                    @using (Html.BeginForm("Delete", "Vote", FormMethod.Post, new { @style = "display:inline;" }))
+                    {
+                        @Html.Hidden("id", item.Id)
+                        <input type="submit" value="Delete" class="btn btn-sm btn-danger"
+                               onclick="return confirm('Are you sure you want to delete this record?');" />
+                    }
+
+                </td>
+            </tr>
+        }
+    </tbody>
 
 </table>
