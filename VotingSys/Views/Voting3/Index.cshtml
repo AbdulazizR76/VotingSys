@@ -1,0 +1,36 @@
+﻿@model IEnumerable<VotingSys.ViewModels.VotingVM>
+
+
+@{
+    ViewBag.Title = "Index";
+}
+<h2>Index</h2>
+@using (Html.BeginForm(actionName: "Submit", controllerName: "Voting3"))
+{
+
+    <div>
+
+        @foreach (var m in Model)
+        {
+
+            <h4>@Html.DisplayFor(model => m.QuestionText) </h4>
+
+            @Html.Hidden($"[{m}].Id", m.Id)
+            @Html.Hidden($"[{m}].QuestionText", m.QuestionText)
+
+
+            foreach (var o in m.VotingOptions)
+            {
+                <input type="radio"
+                       id="option-@o.Id"
+                       name= @o.OptionText
+                       value = "@o.Id" />
+
+                <label for="option-@o.Id">@o.OptionText</label>
+            
+            }
+        }
+    </div><br />
+    <button type="submit" class="btn btn-primary">Submit</button>
+}
+

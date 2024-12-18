@@ -129,6 +129,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\VoteController.cs" />
+    <Compile Include="Controllers\Voting3Controller.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -145,6 +146,7 @@
     <Compile Include="Services\IVoteData.cs" />
     <Compile Include="ViewModels\VoteOptionVM.cs" />
     <Compile Include="ViewModels\VoteVM.cs" />
+    <Compile Include="ViewModels\VotingVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -204,6 +206,7 @@
     <Content Include="Views\Vote\AddOption.cshtml" />
     <Content Include="Views\Vote\ShowOptions.cshtml" />
     <Content Include="Views\Vote\EditOptions.cshtml" />
+    <Content Include="Views\Voting3\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

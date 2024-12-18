@@ -18,5 +18,7 @@ namespace VotingSys.Models
         /// VoteOptions Table.
         /// </summary>
         public DbSet<VoteOption> VotesOption { get; set; }
+
+
     }
 }

@@ -9,5 +9,7 @@ namespace VotingSys.ViewModels
         public string OptionText { get; set; }
 
         public int VoteId { get; set; }
+
+        public int VoteCount { get; set; }
     }
 }
