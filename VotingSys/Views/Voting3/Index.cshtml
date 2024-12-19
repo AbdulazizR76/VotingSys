@@ -10,23 +10,28 @@
 
     <div>
 
-        @foreach (var m in Model)
+        @foreach (var question in Model)
         {
 
-            <h4>@Html.DisplayFor(model => m.QuestionText) </h4>
-
-            @Html.Hidden($"[{m}].Id", m.Id)
-            @Html.Hidden($"[{m}].QuestionText", m.QuestionText)
+            <h4>@Html.DisplayFor(model => question.QuestionText) </h4>
+            
 
 
-            foreach (var o in m.VotingOptions)
+
+
+            foreach (var answers in question.VotingOptions)
             {
-                <input type="radio"
+                @*<input type="radio"
                        id="option-@o.Id"
                        name= @o.OptionText
                        value = "@o.Id" />
 
-                <label for="option-@o.Id">@o.OptionText</label>
+                <label for="option-@o.Id">@o.OptionText</label>*@
+              <label>
+                  @Html.RadioButtonFor(
+          
+                 )
+              </label>
             
             }
         }
