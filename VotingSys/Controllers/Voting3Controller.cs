@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
@@ -48,47 +49,11 @@ namespace VotingSys.Controllers
 
             return View(Li);
         }
-
-        public ActionResult Submit(IEnumerable<VotingVM> model)
+        [HttpPost]
+        public ActionResult Submit(VotingVM model)
         {
 
-
-            var votes = context.Votes
-                  .Include(x => x.VoteOptions)
-               .Select(v => new
-               {
-                   Id = v.Id,
-                   QuestionText = v.QuestionText,
-                   IsCurrent = v.IsCurrent,
-                   CreationDate = v.CreationDate,
-                   VotingOptions = v.VoteOptions,
-               }).ToList();
-
-            var Li = new List<VotingVM>();
-            foreach (var vote in votes)
-            {
-                Li.Add(new VotingVM
-                {
-                    Id = vote.Id,
-                    CreationDate = vote.CreationDate,
-                    IsCurrent = vote.IsCurrent,
-                    QuestionText = vote.QuestionText,
-                    VotingOptions = vote.VotingOptions.Select(x => new VotingOptionVM
-                    {
-                        Id = x.Id,
-                        OptionText = x.OptionText,
-                        VoteCount = x.VoteCount,
-                        VoteId = x.VoteId
-                    }).ToList()
-                });
-            }
-
-
-
-
-
-            return View(votes);
-
+            return View(model);
         }
     }
 }

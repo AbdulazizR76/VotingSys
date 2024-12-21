@@ -7,32 +7,27 @@
 <h2>Index</h2>
 @using (Html.BeginForm(actionName: "Submit", controllerName: "Voting3"))
 {
-
+    @Html.TextBoxFor()
     <div>
 
         @foreach (var question in Model)
         {
 
             <h4>@Html.DisplayFor(model => question.QuestionText) </h4>
-            
+
 
 
 
 
             foreach (var answers in question.VotingOptions)
-            {
-                @*<input type="radio"
-                       id="option-@o.Id"
-                       name= @o.OptionText
-                       value = "@o.Id" />
+            {      
+                <input name="Model.VotingOptions[@question.Id]_Id" id="Model.VotingOptions[@question.Id].Id" type="hidden" value="777777777" />
+                <label>
+                    <input type="radio" name="VotingOptions[@question.Id]_Id" id="VotingOptions[@question.Id].Id" value="@answers.Id" required />
+                    @answers.OptionText
+                </label><br />
+                
 
-                <label for="option-@o.Id">@o.OptionText</label>*@
-              <label>
-                  @Html.RadioButtonFor(
-          
-                 )
-              </label>
-            
             }
         }
     </div><br />
