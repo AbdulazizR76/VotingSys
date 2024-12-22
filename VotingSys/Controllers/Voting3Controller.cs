@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
@@ -49,11 +48,62 @@ namespace VotingSys.Controllers
 
             return View(Li);
         }
+
+
+
+
         [HttpPost]
-        public ActionResult Submit(VotingVM model)
+        public ActionResult Submit(IEnumerable<VotingVM> model)
         {
 
-            return View(model);
+
+            foreach (var questions in model)
+            {
+                foreach (var option in questions.VotingOptions.Where(x => x.IsSelected == true))
+                {
+                    // 
+                    var opentionEntity = context.VotesOption.FirstOrDefault(o => o.Id == option.Id);
+                    if (opentionEntity != null)
+                    {
+                        option.VoteCount++;
+                        context.SaveChanges();
+                    }
+                }
+            }
+
+
+            context.SaveChanges();
+            ViewBag.Message = "Your votes have been submitted successfully!";
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult Submit222(Dictionary<int, int> SelectedOptions)
+        {
+
+            foreach (var selection in SelectedOptions)
+            {
+                int questionId = selection.Key;
+                int selectedOptionId = selection.Value;
+
+
+                var option = context.VotesOption.FirstOrDefault(o => o.Id == selectedOptionId && o.VoteId == questionId);
+                if (option != null)
+                {
+
+                    option.VoteCount += 1;
+                }
+                else
+                {
+
+                    return HttpNotFound();
+                }
+            }
+
+
+            context.SaveChanges();
+            ViewBag.Message = "Your votes have been submitted successfully!";
+            return RedirectToAction("Index");
         }
     }
 }

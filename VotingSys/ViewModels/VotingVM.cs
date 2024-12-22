@@ -22,5 +22,6 @@ namespace VotingSys.ViewModels
         public int VoteId { get; set; }
 
         public int VoteCount { get; set; }
+        public bool IsSelected { get; set; }
     }
 }

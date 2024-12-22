@@ -5,13 +5,14 @@
     ViewBag.Title = "Index";
 }
 <h2>Index</h2>
-@using (Html.BeginForm(actionName: "Submit", controllerName: "Voting3"))
+@using (Html.BeginForm("Submit", "Voting3", FormMethod.Post))
 {
-    @Html.TextBoxFor()
-    <div>
+
+    <div >
 
         @foreach (var question in Model)
         {
+
 
             <h4>@Html.DisplayFor(model => question.QuestionText) </h4>
 
@@ -20,17 +21,31 @@
 
 
             foreach (var answers in question.VotingOptions)
-            {      
-                <input name="Model.VotingOptions[@question.Id]_Id" id="Model.VotingOptions[@question.Id].Id" type="hidden" value="777777777" />
+            {
+
                 <label>
-                    <input type="radio" name="VotingOptions[@question.Id]_Id" id="VotingOptions[@question.Id].Id" value="@answers.Id" required />
+                    <input type="hidden" value="@answers.Id" />
+                    <input type="radio" name="@answers.IsSelected" id="option-@answers.Id" value="" required />
                     @answers.OptionText
                 </label><br />
-                
+
 
             }
         }
-    </div><br />
-    <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+    <br />
+    <button type="submit" id="submitButton" class="btn btn-primary">Submit</button>
 }
 
+
+<script>
+    function ooo(id) {
+        var option = document.getElementById("option-" + id).checked
+        if (option.checked) {
+
+            option.value = "true";
+    }
+    
+        
+
+</script>
